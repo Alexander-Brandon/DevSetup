@@ -17,16 +17,24 @@ local term_objects = {}  -- Store Terminal instances by ID
 
 -- Helper to get or create a terminal instance
 local function get_or_create_term(idx)
-  if not term_objects[idx] then
-    term_objects[idx] = Terminal:new({
-      id = idx,
-      display_name = "Term " .. idx,
+  -- Find the highest existing terminal index
+  local max_idx = 0
+  for i in pairs(term_objects) do
+    if i > max_idx then max_idx = i end
+  end
+
+  -- Create all missing terminals up to idx in order
+  for i = max_idx + 1, idx do
+    term_objects[i] = Terminal:new({
+      id = i,
+      display_name = "Term " .. i,
       hidden = true,
       direction = "horizontal",
       size = 15,
     })
-    table.insert(terms, term_objects[idx])
+    table.insert(terms, term_objects[i])
   end
+
   return term_objects[idx]
 end
 
