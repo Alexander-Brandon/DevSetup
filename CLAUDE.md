@@ -117,6 +117,7 @@ The custom statusline module `terminals` displays active terminal names - it gra
 - **Editor Options**: Add to `lua/options.lua` (imports NvChad defaults first)
 - **NvChad Settings**: Modify `lua/chadrc.lua` following the structure referenced in NvChad's UI module
 - **Formatting**: Always run `stylua` before committing Lua files
+- **Git**: All git commands are forbidden.
 
 ## Lua Diagnostics Notes
 
