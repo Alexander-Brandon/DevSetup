@@ -15,6 +15,18 @@ local current_term_idx = 1
 local terms = {}
 local term_objects = {}  -- Store Terminal instances by ID
 
+-- Helper to close a terminal window by buffer number
+local function close_term_window(bufnr)
+  if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then return end
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local ok, buf = pcall(vim.api.nvim_win_get_buf, win)
+    if ok and buf == bufnr then
+      vim.api.nvim_win_close(win, false)
+      break
+    end
+  end
+end
+
 -- Helper to get or create a terminal instance
 local function get_or_create_term(idx)
   -- Find the highest existing terminal index
@@ -54,25 +66,12 @@ function _G.toggle_term(idx)
     and #vim.fn.win_findbuf(term.bufnr) > 0
 
   if is_visible then
-    -- Close the terminal window
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      local ok, buf = pcall(vim.api.nvim_win_get_buf, win)
-      if ok and buf == term.bufnr then
-        vim.api.nvim_win_close(win, false)
-        break
-      end
-    end
+    close_term_window(term.bufnr)
   else
     -- Close any other open terminal windows first
     for other_idx, other_term in pairs(term_objects) do
-      if other_idx ~= idx and other_term.bufnr then
-        for _, win in ipairs(vim.api.nvim_list_wins()) do
-          local ok, buf = pcall(vim.api.nvim_win_get_buf, win)
-          if ok and buf == other_term.bufnr then
-            vim.api.nvim_win_close(win, false)
-            break
-          end
-        end
+      if other_idx ~= idx then
+        close_term_window(other_term.bufnr)
       end
     end
     -- Open this terminal
@@ -97,16 +96,10 @@ function _G.cycle_next_term()
     end
   end
 
-  -- Close current terminal window (mirrors toggle_term approach)
+  -- Close current terminal window
   local current_term = term_objects[current_term_idx]
-  if current_term and current_term.bufnr then
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      local ok, buf = pcall(vim.api.nvim_win_get_buf, win)
-      if ok and buf == current_term.bufnr then
-        vim.api.nvim_win_close(win, false)
-        break
-      end
-    end
+  if current_term then
+    close_term_window(current_term.bufnr)
   end
 
   -- Collect and sort all existing terminal indices
@@ -130,7 +123,7 @@ function _G.cycle_next_term()
   next_term:open()
 end
 
--- Cycle to next terminal instance
+-- Cycle to previous terminal instance
 function _G.cycle_previous_term()
   -- Detect which terminal we're actually in (immune to stale current_term_idx)
   local cur_buf = vim.api.nvim_get_current_buf()
@@ -141,16 +134,10 @@ function _G.cycle_previous_term()
     end
   end
 
-  -- Close current terminal window (mirrors toggle_term approach)
+  -- Close current terminal window
   local current_term = term_objects[current_term_idx]
-  if current_term and current_term.bufnr then
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      local ok, buf = pcall(vim.api.nvim_win_get_buf, win)
-      if ok and buf == current_term.bufnr then
-        vim.api.nvim_win_close(win, false)
-        break
-      end
-    end
+  if current_term then
+    close_term_window(current_term.bufnr)
   end
 
   -- Collect and sort all existing terminal indices
@@ -169,9 +156,9 @@ function _G.cycle_previous_term()
 
   current_term_idx = previous_idx
 
-  -- Open the next terminal
-  local next_term = term_objects[current_term_idx]
-  next_term:open()
+  -- Open the previous terminal
+  local prev_term = term_objects[current_term_idx]
+  prev_term:open()
 end
 
 -- Dynamic terminal creation

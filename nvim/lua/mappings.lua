@@ -14,12 +14,12 @@ map("i", "jk", "<ESC>")
 map({ "n", "t" }, "<A-h>", function() _G.toggle_current_term() end,
   { desc = "Toggle horizontal terminal" })
 
--- In terminal mode: shift+tab cycles to next terminal
-map("t", "<S-L>", function() _G.cycle_next_term() end,
+-- In terminal mode: alt+shift+l cycles to next terminal
+map("t", "<A-S-l>", function() _G.cycle_next_term() end,
   { desc = "Cycle to next terminal instance" })
 
--- In terminal mode: shift+tab cycles to next terminal
-map("t", "<S-H>", function() _G.cycle_previous_term() end,
+-- In terminal mode: alt+shift+h cycles to previous terminal
+map("t", "<A-S-h>", function() _G.cycle_previous_term() end,
   { desc = "Cycle to previous terminal instance" })
 
 
