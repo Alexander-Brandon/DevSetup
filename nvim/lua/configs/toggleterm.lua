@@ -1,23 +1,25 @@
-local toggleterm = require("toggleterm")
+local toggleterm = require "toggleterm"
 local Terminal = require("toggleterm.terminal").Terminal
 
-toggleterm.setup({
+toggleterm.setup {
   direction = "horizontal",
   size = 18,
   open_mapping = nil, -- manage manually
   shade_terminals = true,
   persist_mode = true,
   close_on_exit = true,
-})
+}
 
 -- Terminal configuration
 local current_term_idx = 1
 local terms = {}
-local term_objects = {}  -- Store Terminal instances by ID
+local term_objects = {} -- Store Terminal instances by ID
 
 -- Helper to close a terminal window by buffer number
 local function close_term_window(bufnr)
-  if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then return end
+  if not bufnr or not vim.api.nvim_buf_is_valid(bufnr) then
+    return
+  end
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local ok, buf = pcall(vim.api.nvim_win_get_buf, win)
     if ok and buf == bufnr then
@@ -32,18 +34,20 @@ local function get_or_create_term(idx)
   -- Find the highest existing terminal index
   local max_idx = 0
   for i in pairs(term_objects) do
-    if i > max_idx then max_idx = i end
+    if i > max_idx then
+      max_idx = i
+    end
   end
 
   -- Create all missing terminals up to idx in order
   for i = max_idx + 1, idx do
-    term_objects[i] = Terminal:new({
+    term_objects[i] = Terminal:new {
       id = i,
       display_name = "Term " .. i,
       hidden = true,
       direction = "horizontal",
       size = 15,
-    })
+    }
     table.insert(terms, term_objects[i])
   end
 
@@ -58,12 +62,12 @@ end
 -- Toggle terminal by index
 function _G.toggle_term(idx)
   local term = get_or_create_term(idx)
-  if not term then return end
+  if not term then
+    return
+  end
 
   -- Check if this terminal's buffer is visible
-  local is_visible = term.bufnr
-    and vim.api.nvim_buf_is_valid(term.bufnr)
-    and #vim.fn.win_findbuf(term.bufnr) > 0
+  local is_visible = term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) and #vim.fn.win_findbuf(term.bufnr) > 0
 
   if is_visible then
     close_term_window(term.bufnr)
@@ -112,7 +116,10 @@ function _G.cycle_next_term()
   -- Find current position, then advance (wrapping)
   local pos = 1
   for i, idx in ipairs(indices) do
-    if idx == current_term_idx then pos = i; break end
+    if idx == current_term_idx then
+      pos = i
+      break
+    end
   end
   local next_idx = indices[(pos % #indices) + 1]
 
@@ -150,7 +157,10 @@ function _G.cycle_previous_term()
   -- Find current position, then advance (wrapping)
   local pos = 1
   for i, idx in ipairs(indices) do
-    if idx == current_term_idx then pos = i; break end
+    if idx == current_term_idx then
+      pos = i
+      break
+    end
   end
   local previous_idx = indices[((pos - 2) % #indices) + 1]
 
@@ -168,4 +178,6 @@ end
 
 -- Expose for statusline
 _G.toggleterm_instances = terms
-_G.toggleterm_current_idx = function() return current_term_idx end
+_G.toggleterm_current_idx = function()
+  return current_term_idx
+end

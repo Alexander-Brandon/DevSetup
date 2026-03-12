@@ -23,13 +23,13 @@ return {
   },
 
   {
- "nvim-tree/nvim-tree.lua",
+    "nvim-tree/nvim-tree.lua",
     opts = {
       view = {
         side = "right",
       },
-    }
- },
+    },
+  },
 
   {
     "akinsho/toggleterm.nvim",
