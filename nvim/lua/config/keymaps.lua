@@ -74,8 +74,9 @@ map("n", "<leader>gg", function()
 end, { desc = "Open LazyGit" })
 
 --- Buffer Commands are <leader>b*
-map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+map("n", ".", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+map("n", ",", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Close buffer" })
 
 --- Conform Commands are <leader>f*
 map({ "n", "x" }, "<leader>fm", function()
