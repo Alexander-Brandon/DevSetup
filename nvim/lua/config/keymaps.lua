@@ -25,8 +25,15 @@ map("n", "<leader>tf", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 local harpoon = require("harpoon")
 
 harpoon:setup()
+local function harpoon_redraw()
+  vim.schedule(function()
+    vim.cmd("redrawtabline")
+  end)
+end
+
 map("n", "<leader>ha", function()
   harpoon:list():add()
+  harpoon_redraw()
 end, { desc = "Harpoon Add" })
 map("n", "<leader>he", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
@@ -41,36 +48,17 @@ local function harpoon_desc(idx)
 end
 
 local wk = require("which-key")
-wk.add({
-  {
-    "<leader>h1",
+local harpoon_entries = {}
+for i = 1, 9 do
+  table.insert(harpoon_entries, {
+    "<leader>h" .. i,
     function()
-      harpoon:list():select(1)
+      harpoon:list():select(i)
     end,
-    desc = harpoon_desc(1),
-  },
-  {
-    "<leader>h2",
-    function()
-      harpoon:list():select(2)
-    end,
-    desc = harpoon_desc(2),
-  },
-  {
-    "<leader>h3",
-    function()
-      harpoon:list():select(3)
-    end,
-    desc = harpoon_desc(3),
-  },
-  {
-    "<leader>h4",
-    function()
-      harpoon:list():select(4)
-    end,
-    desc = harpoon_desc(4),
-  },
-})
+    desc = harpoon_desc(i),
+  })
+end
+wk.add(harpoon_entries)
 map("n", "<leader>hh", function()
   harpoon:list():prev()
 end, { desc = "Harpoon: prev" })
@@ -86,6 +74,8 @@ map("n", "<leader>gg", function()
 end, { desc = "Open LazyGit" })
 
 --- Buffer Commands are <leader>b*
+map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 
 --- Conform Commands are <leader>f*
 map({ "n", "x" }, "<leader>fm", function()

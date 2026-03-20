@@ -11,6 +11,28 @@ return {
   },
   { "folke/which-key.nvim" },
   {
+    "akinsho/bufferline.nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      options = {
+        name_formatter = function(buf)
+          local ok, harpoon = pcall(require, "harpoon")
+          if not ok then
+            return buf.name
+          end
+          local list = harpoon:list()
+          for i, item in ipairs(list.items) do
+            if item.value == vim.fn.fnamemodify(buf.path, ":.") then
+              return buf.name .. " · " .. i
+            end
+          end
+          return buf.name
+        end,
+      },
+    },
+  },
+  {
     "nvim-telescope/telescope.nvim",
   },
   {
