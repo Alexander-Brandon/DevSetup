@@ -60,10 +60,8 @@ return {
     lazy = false,
     priority = 1000,
     name = "catppuccin",
-    init = function()
-      vim.cmd.colorscheme("catppuccin")
-    end,
     opts = {
+      flavour = "macchiato",
       highlight_overrides = {
         all = function(colors)
           return {
@@ -117,6 +115,10 @@ return {
         end,
       },
     },
+    config = function(_, opts)
+      require("catppuccin").setup(opts)
+      vim.cmd.colorscheme("catppuccin")
+    end,
   },
   {
     "nvim-tree/nvim-tree.lua",
