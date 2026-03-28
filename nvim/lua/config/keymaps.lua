@@ -18,8 +18,12 @@ map("n", "<C-k>", "<C-w>k", { desc = "Move to upper window" })
 --- Sidebar Commands are <leader>B*
 map("n", "<leader>BB", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle Tree Window" })
 
---- Telescope Commands are <leader>t*
-map("n", "<leader>tf", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
+--- Find Commands are <leader>l*
+map("n", "<leader>lf", "<cmd>FzfLua files<cr>", { desc = "Find files" })
+map("n", "<leader>lg", "<cmd>FzfLua live_grep<cr>", { desc = "Live grep" })
+map("n", "<leader>lr", "<cmd>FzfLua oldfiles<cr>", { desc = "Recent files" })
+map("n", "<leader>ls", "<cmd>FzfLua grep_cword<cr>", { desc = "Search word under cursor" })
+map("n", "<leader>lk", "<cmd>FzfLua keymaps<cr>", { desc = "Keymaps" })
 
 --- Harpoon Commands are <leader>h*
 local harpoon = require("harpoon")

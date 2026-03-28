@@ -32,8 +32,13 @@ return {
       },
     },
   },
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  -- },
   {
-    "nvim-telescope/telescope.nvim",
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
   },
   {
     "ThePrimeagen/harpoon",
