@@ -1,13 +1,15 @@
 local map = vim.keymap.set
 
 --- Diagnostic Commands are <leader>e*
+map("n", "<leader>ed", vim.lsp.buf.definition, { desc = "Go to definition" })
+map("n", "<leader>eD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 map("n", "<leader>ef", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
-map("n", "<leader>el", function()
-  vim.diagnostic.goto_next()
-end, { desc = "Next diagnostic" })
 map("n", "<leader>eh", function()
   vim.diagnostic.goto_prev()
 end, { desc = "Previous diagnostic" })
+map("n", "<leader>el", function()
+  vim.diagnostic.goto_next()
+end, { desc = "Next diagnostic" })
 
 --- Window Navigation are <C-*>
 map("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
