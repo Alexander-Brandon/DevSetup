@@ -122,20 +122,6 @@ return {
       vim.cmd.colorscheme("catppuccin")
     end,
   },
-  {
-    "nvim-tree/nvim-tree.lua",
-    opts = {
-      view = {
-        side = "right",
-      },
-      filters = {
-        dotfiles = true,
-      },
-      renderer = {
-        root_folder_label = ":t",
-      },
-    },
-  },
   { "nvim-tree/nvim-web-devicons" },
   {
     "akinsho/toggleterm.nvim",

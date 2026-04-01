@@ -1,8 +1,6 @@
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     local initial_buf = vim.api.nvim_get_current_buf()
-    local nvim_tree = require("nvim-tree.api")
-    nvim_tree.tree.open()
 
     vim.schedule(function()
       local ok, harpoon = pcall(require, "harpoon")
@@ -18,10 +16,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
       if vim.api.nvim_buf_is_valid(initial_buf) and name == "" and #lines == 1 and lines[1] == "" then
         vim.api.nvim_buf_delete(initial_buf, { force = true })
       end
-
-      vim.schedule(function()
-        nvim_tree.tree.expand_all()
-      end)
     end)
   end,
 })
