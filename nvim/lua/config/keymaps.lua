@@ -5,10 +5,10 @@ map("n", "<leader>ed", vim.lsp.buf.definition, { desc = "Go to definition" })
 map("n", "<leader>eD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 map("n", "<leader>ef", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
 map("n", "<leader>eh", function()
-  vim.diagnostic.goto_prev()
+  vim.diagnostic.jump({ count = -1 })
 end, { desc = "Previous diagnostic" })
 map("n", "<leader>el", function()
-  vim.diagnostic.goto_next()
+  vim.diagnostic.jump({ count = 1 })
 end, { desc = "Next diagnostic" })
 
 --- Window Navigation are <C-*>
