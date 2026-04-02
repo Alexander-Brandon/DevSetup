@@ -17,9 +17,6 @@ map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Move to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Move to upper window" })
 
---- Sidebar Commands are <leader>B*
-map("n", "<leader>BB", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle Tree Window" })
-
 --- Fuzzy Find Commands are <leader>l*
 map("n", "<leader>lf", "<cmd>FzfLua files<cr>", { desc = "Find files" })
 map("n", "<leader>lg", "<cmd>FzfLua live_grep<cr>", { desc = "Live grep" })
