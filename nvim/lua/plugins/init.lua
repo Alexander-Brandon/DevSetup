@@ -5,6 +5,7 @@ return {
       formatters_by_ft = {
         lua = { "stylua" },
         zig = { "zigfmt" },
+        rust = { "rustfmt" },
         -- css = { "prettier" },
         -- html = { "prettier" },
       },
