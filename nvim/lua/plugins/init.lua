@@ -86,8 +86,6 @@ return {
         fzf = true,
         gitsigns = true,
         mason = true,
-        neotest = true,
-        treesitter_context = true,
         which_key = true,
       },
     },
@@ -222,18 +220,6 @@ return {
       },
       completion = {
         documentation = { auto_show = true },
-      },
-    },
-  },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
-        "html",
-        "css",
       },
     },
   },
