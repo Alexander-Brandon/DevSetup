@@ -1,3 +1,10 @@
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
+
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     local initial_buf = vim.api.nvim_get_current_buf()

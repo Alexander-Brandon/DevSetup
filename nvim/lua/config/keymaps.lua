@@ -1,28 +1,29 @@
 local map = vim.keymap.set
 
 --- Diagnostic Commands are <leader>e*
-map("n", "<leader>ed", vim.lsp.buf.definition, { desc = "Go to definition" })
 map("n", "<leader>eD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+map("n", "<leader>ed", vim.lsp.buf.definition, { desc = "Go to definition" })
 map("n", "<leader>ef", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
-map("n", "<leader>eh", function()
-  vim.diagnostic.jump({ count = -1 })
-end, { desc = "Previous diagnostic" })
-map("n", "<leader>el", function()
+map("n", "<leader>eh", vim.lsp.buf.hover, { desc = "Hover" })
+map("n", "<leader>ej", function()
   vim.diagnostic.jump({ count = 1 })
 end, { desc = "Next diagnostic" })
+map("n", "<leader>ek", function()
+  vim.diagnostic.jump({ count = -1 })
+end, { desc = "Previous diagnostic" })
 
 --- Window Navigation are <C-*>
 map("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Move to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Move to upper window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
 --- Fuzzy Find Commands are <leader>l*
 map("n", "<leader>lf", "<cmd>FzfLua files<cr>", { desc = "Find files" })
 map("n", "<leader>lg", "<cmd>FzfLua live_grep<cr>", { desc = "Live grep" })
+map("n", "<leader>lk", "<cmd>FzfLua keymaps<cr>", { desc = "Keymaps" })
 map("n", "<leader>lr", "<cmd>FzfLua oldfiles<cr>", { desc = "Recent files" })
 map("n", "<leader>ls", "<cmd>FzfLua grep_cword<cr>", { desc = "Search word under cursor" })
-map("n", "<leader>lk", "<cmd>FzfLua keymaps<cr>", { desc = "Keymaps" })
 
 --- Harpoon Commands are <leader>h*
 local harpoon = require("harpoon")
@@ -41,6 +42,12 @@ end, { desc = "Harpoon Add" })
 map("n", "<leader>he", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = "Harpoon Toggle Menu" })
+map("n", "<leader>hh", function()
+  harpoon:list():prev()
+end, { desc = "Harpoon: prev" })
+map("n", "<leader>hl", function()
+  harpoon:list():next()
+end, { desc = "Harpoon: next" })
 local function harpoon_desc(idx)
   return function()
     local item = harpoon:list():get(idx)
@@ -51,6 +58,16 @@ local function harpoon_desc(idx)
 end
 
 local wk = require("which-key")
+
+wk.add({
+  { "<leader>b", group = "Buffer" },
+  { "<leader>e", group = "LSP", icon = "⚙" },
+  { "<leader>f", group = "Format" },
+  { "<leader>g", group = "Git" },
+  { "<leader>h", group = "Harpoon", icon = "⚓" },
+  { "<leader>l", group = "Finder" },
+})
+
 local harpoon_entries = {}
 for i = 1, 9 do
   table.insert(harpoon_entries, {
@@ -62,12 +79,6 @@ for i = 1, 9 do
   })
 end
 wk.add(harpoon_entries)
-map("n", "<leader>hh", function()
-  harpoon:list():prev()
-end, { desc = "Harpoon: prev" })
-map("n", "<leader>hl", function()
-  harpoon:list():next()
-end, { desc = "Harpoon: next" })
 
 --- Git Commands are <leader>g*
 map("n", "<leader>gg", function()
