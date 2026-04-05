@@ -121,7 +121,7 @@ return {
         local current = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
         for i, item in ipairs(harpoon:list().items) do
           if item.value == current then
-            return "⚓ " .. i
+            return "⇀ " .. i
           end
         end
         return ""
