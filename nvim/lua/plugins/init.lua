@@ -124,8 +124,8 @@ return {
             return "🐡 " .. i
           end
         end
-        return "⇀ 🐡"
-      end
+        return "🙈"
+end
 
       require("lualine").setup({
         options = {
@@ -163,7 +163,7 @@ return {
         sections = {
           lualine_a = { "mode" },
           lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename", harpoon_component },
+          lualine_c = { { "filename", path = 1 }, harpoon_component },
           lualine_x = { "encoding", "fileformat", "filetype" },
           lualine_y = { "progress" },
           lualine_z = { "location" },
