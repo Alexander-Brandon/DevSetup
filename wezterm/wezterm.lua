@@ -24,7 +24,7 @@ config.keys = {
     key = "|",
     mods = "SUPER|SHIFT",
     action = wezterm.action.SpawnCommandInNewTab {
-      args = { "/Users/brandonalexander/.local/bin/claude" },
+      args = { wezterm.home_dir .. "/.local/bin/claude" },
     },
   },
   {
