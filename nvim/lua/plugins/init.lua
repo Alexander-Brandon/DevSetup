@@ -43,12 +43,6 @@ return {
     },
   },
   {
-    "lewis6991/gitsigns.nvim",
-    opts = {
-      current_line_blame = true,
-    },
-  },
-  {
     "catppuccin/nvim",
     lazy = false,
     priority = 1000,
@@ -66,7 +60,6 @@ return {
       integrations = {
         blink_cmp = true,
         fzf = true,
-        gitsigns = true,
         mason = true,
         which_key = true,
       },
@@ -77,37 +70,6 @@ return {
     end,
   },
   { "nvim-tree/nvim-web-devicons" },
-  {
-    "akinsho/toggleterm.nvim",
-    opts = {
-      shade_terminals = false,
-    },
-    config = function(_, opts)
-      require("toggleterm").setup(opts)
-
-      local Terminal = require("toggleterm.terminal").Terminal
-
-      -- Persistent popup terminal
-      local popup_term = Terminal:new({
-        display_name = "Popup",
-        direction = "float",
-        float_opts = { border = "curved" },
-        hidden = true,
-      })
-
-      -- Persistent horizontal terminal
-      local horizontal_term = Terminal:new({
-        display_name = "Horizontal",
-        direction = "horizontal",
-        size = 15,
-        hidden = true,
-      })
-
-      -- Expose globally so keymaps.lua can access them
-      _G.popup_term = popup_term
-      _G.horizontal_term = horizontal_term
-    end,
-  },
   {
     "nvim-lualine/lualine.nvim",
     lazy = false,
@@ -125,7 +87,7 @@ return {
           end
         end
         return "🙈"
-end
+      end
 
       require("lualine").setup({
         options = {

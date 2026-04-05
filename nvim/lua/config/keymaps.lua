@@ -75,27 +75,7 @@ wk.add(harpoon_entries)
 
 --- Git Commands are <leader>g*
 map("n", "<leader>gg", function()
-  local Terminal = require("toggleterm.terminal").Terminal
-  local lazygit = Terminal:new({
-    cmd = "lazygit",
-    display_name = "LazyGit",
-    direction = "float",
-    float_opts = { border = "rounded" },
-    highlights = {
-      FloatBorder = {
-        guibg = "#000000",
-        guifg = "#39ff14",
-      },
-      Normal = { guibg = "#000000" },
-      NormalFloat = { guibg = "#000000" },
-    },
-    on_open = function(term)
-      vim.api.nvim_set_hl(0, "LazyGitTitle", { fg = "#39ff14", bg = "#000000" })
-      vim.wo[term.window].winhighlight = vim.wo[term.window].winhighlight .. ",FloatTitle:LazyGitTitle"
-    end,
-    hidden = true,
-  })
-  lazygit:toggle()
+  vim.fn.jobstart({ "wezterm", "cli", "split-pane", "--right", "--", "lazygit" }, { detach = true })
 end, { desc = "Open LazyGit" })
 
 --- Buffer Commands are <leader>b*
@@ -106,10 +86,3 @@ map({ "n", "x" }, "<leader>fm", function()
   require("conform").format({ lsp_fallback = true })
 end, { desc = "general format file" })
 
---- Terminal Commands are <M-i> and <M-h>
-map({ "n", "t" }, "<M-i>", function()
-  _G.popup_term:toggle()
-end, { desc = "Toggle popup terminal" })
-map({ "n", "t" }, "<M-h>", function()
-  _G.horizontal_term:toggle()
-end, { desc = "Toggle horizontal terminal" })

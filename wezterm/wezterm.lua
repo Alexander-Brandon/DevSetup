@@ -28,6 +28,19 @@ config.keys = {
     },
   },
   {
+    key = "g",
+    mods = "ALT",
+    action = wezterm.action.SplitPane {
+      direction = "Right",
+      command = {
+        args = { "lazygit" },
+        set_environment_variables = {
+          PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+        },
+      },
+    },
+  },
+  {
     key = "w",
     mods = "ALT",
     action = wezterm.action.CloseCurrentPane { confirm = false },
