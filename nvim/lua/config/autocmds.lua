@@ -12,9 +12,22 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.schedule(function()
       local ok, harpoon = pcall(require, "harpoon")
       if ok then
-        local item = harpoon:list():get(1)
+        local list = harpoon:list()
+
+        -- Load all harpooned files as buffers
+        for _, item in ipairs(list.items) do
+          local path = vim.fn.fnamemodify(item.value, ":p")
+          if vim.fn.filereadable(path) == 1 then
+            local bufnr = vim.fn.bufadd(path)
+            vim.fn.bufload(bufnr)
+            vim.bo[bufnr].buflisted = true
+          end
+        end
+
+        -- Open slot 1
+        local item = list:get(1)
         if item then
-          harpoon:list():select(1)
+          list:select(1)
         end
       end
 

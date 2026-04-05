@@ -20,31 +20,13 @@ return {
     },
   },
   {
-    "akinsho/bufferline.nvim",
-    lazy = false,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-      options = {
-        name_formatter = function(buf)
-          local ok, harpoon = pcall(require, "harpoon")
-          if not ok then
-            return buf.name
-          end
-          local list = harpoon:list()
-          for i, item in ipairs(list.items) do
-            if item.value == vim.fn.fnamemodify(buf.path, ":.") then
-              return buf.name .. " · " .. i
-            end
-          end
-          return buf.name
-        end,
-      },
-    },
-  },
-  {
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {},
+    opts = {
+      winopts = {
+        title_flags = false,
+      },
+    },
   },
   {
     "ThePrimeagen/harpoon",
@@ -73,13 +55,6 @@ return {
     name = "catppuccin",
     opts = {
       flavour = "macchiato",
-      highlight_overrides = {
-        all = function(colors)
-          return {
-            NvimTreeRootFolder = { fg = colors.mauve, style = { "bold" } },
-          }
-        end,
-      },
       lsp_styles = {
         underlines = {
           errors = { "undercurl" },
@@ -94,17 +69,6 @@ return {
         gitsigns = true,
         mason = true,
         which_key = true,
-      },
-    },
-    specs = {
-      {
-        "akinsho/bufferline.nvim",
-        optional = true,
-        opts = function(_, opts)
-          if (vim.g.colors_name or ""):find("catppuccin") then
-            opts.highlights = require("catppuccin.special.bufferline").get_theme()
-          end
-        end,
       },
     },
     config = function(_, opts)

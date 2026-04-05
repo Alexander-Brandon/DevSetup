@@ -21,7 +21,6 @@ This is a **Neovim configuration** [Package Manager: Lazy.nvim] — all configur
 
 - `conform.nvim`: Code formatting (`<leader>fm`)
 - `which-key.nvim`: Keymap popup hints
-- `bufferline.nvim`: Buffer tab bar (shows Harpoon slot index on pinned buffers)
 - `nvim-lualine/lualine.nvim`: Statusline
 - `saghen/blink.cmp`: Autocompletion (Tab/S-Tab to navigate, CR to accept)
 - `fzf-lua`: Fuzzy finder (`<leader>l*`)
@@ -29,14 +28,11 @@ This is a **Neovim configuration** [Package Manager: Lazy.nvim] — all configur
 - `mason.nvim` + `mason-lspconfig.nvim` + `nvim-lspconfig`: LSP auto-install and setup
 - `gitsigns.nvim`: Git blame and change signs
 - `catppuccin/nvim`: Colorscheme (macchiato flavour)
-- `nvim-tree.lua`: File tree sidebar (right side, opens on VimEnter)
 - `nvim-web-devicons`: File icons
 - `toggleterm.nvim`: Integrated terminal (popup + horizontal; also used for lazygit)
-- `nvim-treesitter`: Syntax highlighting
 
 ## Key Mappings
 
-- `.` / `,` — BufferLine next/prev buffer
 - `<leader>bd` — Close buffer
 - `<leader>ha` — Harpoon add file
 - `<leader>he` — Harpoon quick menu
@@ -47,10 +43,14 @@ This is a **Neovim configuration** [Package Manager: Lazy.nvim] — all configur
 - `<leader>lr` — fzf-lua recent files
 - `<leader>ls` — fzf-lua search word under cursor
 - `<leader>lk` — fzf-lua keymaps
+- `<leader>lb` — fzf-lua buffers
 - `<leader>fm` — Format file (conform)
 - `<leader>gg` — Open LazyGit (float terminal via toggleterm)
-- `<leader>BB` — Toggle nvim-tree
-- `<leader>ef/el/eh` — Diagnostic float/next/prev
+- `<leader>ef` — Diagnostic float
+- `<leader>ej` / `<leader>ek` — Next/prev diagnostic
+- `<leader>ed` — Go to definition
+- `<leader>eD` — Go to declaration
+- `<leader>eh` — Hover (LSP)
 - `<M-i>` — Toggle popup terminal (float)
 - `<M-h>` — Toggle horizontal terminal
 - `<C-h/j/k/l>` — Window navigation
@@ -85,4 +85,6 @@ nvim/
 
 - The two persistent terminals (`popup_term`, `horizontal_term`) are created in the toggleterm config and exposed as `_G` globals so `keymaps.lua` can toggle them
 - LazyGit is spawned as a fresh `Terminal:new()` on each `<leader>gg` call with custom black/neon-green highlight overrides
+- Treesitter is used as a **Neovim built-in** (no plugin) — `autocmds.lua` calls `pcall(vim.treesitter.start)` on every `FileType` event for syntax highlighting
+- On `VimEnter`, Harpoon slot 1 is auto-selected and the initial empty buffer is deleted — this is intentional behavior in `autocmds.lua`
 - `vim` is a Neovim runtime global — undefined variable warnings from the Lua LSP are expected and can be ignored

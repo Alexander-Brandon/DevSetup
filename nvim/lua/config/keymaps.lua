@@ -24,20 +24,15 @@ map("n", "<leader>lg", "<cmd>FzfLua live_grep<cr>", { desc = "Live grep" })
 map("n", "<leader>lk", "<cmd>FzfLua keymaps<cr>", { desc = "Keymaps" })
 map("n", "<leader>lr", "<cmd>FzfLua oldfiles<cr>", { desc = "Recent files" })
 map("n", "<leader>ls", "<cmd>FzfLua grep_cword<cr>", { desc = "Search word under cursor" })
+map("n", "<leader>lb", "<cmd>FzfLua buffers<cr>", { desc = "Buffers" })
 
 --- Harpoon Commands are <leader>h*
 local harpoon = require("harpoon")
 
 harpoon:setup()
-local function harpoon_redraw()
-  vim.schedule(function()
-    vim.cmd("redrawtabline")
-  end)
-end
 
 map("n", "<leader>ha", function()
   harpoon:list():add()
-  harpoon_redraw()
 end, { desc = "Harpoon Add" })
 map("n", "<leader>he", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
@@ -106,8 +101,6 @@ map("n", "<leader>gg", function()
 end, { desc = "Open LazyGit" })
 
 --- Buffer Commands are <leader>b*
-map("n", ".", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-map("n", ",", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Close buffer" })
 
 --- Conform Commands are <leader>f*
