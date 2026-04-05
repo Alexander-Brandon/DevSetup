@@ -124,7 +124,7 @@ return {
             return "🐡 " .. i
           end
         end
-        return "🐡 ?"
+        return "🐡 ‽"
       end
 
       require("lualine").setup({
