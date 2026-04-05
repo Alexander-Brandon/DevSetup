@@ -113,6 +113,20 @@ return {
     lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
+      local function harpoon_component()
+        local ok, harpoon = pcall(require, "harpoon")
+        if not ok then
+          return ""
+        end
+        local current = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
+        for i, item in ipairs(harpoon:list().items) do
+          if item.value == current then
+            return "🐡 " .. i
+          end
+        end
+        return "⇀ 🐡"
+      end
+
       require("lualine").setup({
         options = {
           icons_enabled = true,
@@ -149,7 +163,7 @@ return {
         sections = {
           lualine_a = { "mode" },
           lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { "filename" },
+          lualine_c = { "filename", harpoon_component },
           lualine_x = { "encoding", "fileformat", "filetype" },
           lualine_y = { "progress" },
           lualine_z = { "location" },
