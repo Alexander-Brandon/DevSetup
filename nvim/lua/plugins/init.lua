@@ -118,20 +118,13 @@ return {
         if not ok then
           return ""
         end
-        local list = harpoon:list()
-        if #list.items == 0 then
-          return ""
-        end
         local current = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
-        local parts = {}
-        for i, item in ipairs(list.items) do
+        for i, item in ipairs(harpoon:list().items) do
           if item.value == current then
-            table.insert(parts, "[" .. i .. "]")
-          else
-            table.insert(parts, tostring(i))
+            return "⚓ " .. i
           end
         end
-        return "⚓ " .. table.concat(parts, " ")
+        return ""
       end
 
       require("lualine").setup({
