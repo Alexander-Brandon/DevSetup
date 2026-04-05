@@ -46,9 +46,7 @@ end, { desc = "Harpoon: next" })
 local function harpoon_desc(idx)
   return function()
     local item = harpoon:list():get(idx)
-    return item
-        and ("Harpoon: " .. vim.fn.fnamemodify(item.value, ":h:t") .. "/" .. vim.fn.fnamemodify(item.value, ":t"))
-      or ("Harpoon slot " .. idx)
+    return item and ("Harpoon: " .. vim.fn.fnamemodify(item.value, ":t")) or ("Harpoon slot " .. idx)
   end
 end
 
