@@ -75,7 +75,24 @@ wk.add(harpoon_entries)
 
 --- Git Commands are <leader>g*
 map("n", "<leader>gg", function()
-  vim.fn.jobstart({ "wezterm", "cli", "split-pane", "--right", "--", "lazygit" }, { detach = true })
+  local buf = vim.api.nvim_create_buf(false, true)
+  local width = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    col = math.floor((vim.o.columns - width) / 2),
+    row = math.floor((vim.o.lines - height) / 2),
+    style = "minimal",
+    border = "rounded",
+  })
+  vim.fn.termopen("lazygit", {
+    on_exit = function()
+      vim.api.nvim_win_close(win, true)
+    end,
+  })
+  vim.cmd("startinsert")
 end, { desc = "Open LazyGit" })
 
 --- Buffer Commands are <leader>b*

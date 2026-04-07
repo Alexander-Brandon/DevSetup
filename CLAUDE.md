@@ -43,7 +43,7 @@ This is a **Neovim configuration** [Package Manager: Lazy.nvim] — all configur
 - `<leader>lk` — fzf-lua keymaps
 - `<leader>lb` — fzf-lua buffers
 - `<leader>fm` — Format file (conform)
-- `<leader>gg` — Open LazyGit (wezterm split pane via `wezterm cli split-pane`)
+- `<leader>gg` — Open LazyGit (floating terminal window)
 - `<leader>ef` — Diagnostic float
 - `<leader>ej` / `<leader>ek` — Next/prev diagnostic
 - `<leader>ed` — Go to definition
