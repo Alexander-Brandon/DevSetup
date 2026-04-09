@@ -50,6 +50,10 @@ local function harpoon_desc(idx)
   end
 end
 
+local function harpoon_del(idx)
+  harpoon:list():remove_at(idx)
+end
+
 local wk = require("which-key")
 
 wk.add({
@@ -58,6 +62,7 @@ wk.add({
   { "<leader>f", group = "Format" },
   { "<leader>g", group = "Git" },
   { "<leader>h", group = "Harpoon", icon = "⚓" },
+  { "<leader>hd", group = "Delete slot" },
   { "<leader>l", group = "Finder" },
 })
 
@@ -69,6 +74,13 @@ for i = 1, 9 do
       harpoon:list():select(i)
     end,
     desc = harpoon_desc(i),
+  })
+  table.insert(harpoon_entries, {
+    "<leader>hd" .. i,
+    function()
+      harpoon_del(i)
+    end,
+    desc = "Delete slot " .. i,
   })
 end
 wk.add(harpoon_entries)
@@ -102,4 +114,3 @@ map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Close buffer" })
 map({ "n", "x" }, "<leader>fm", function()
   require("conform").format({ lsp_fallback = true })
 end, { desc = "general format file" })
-
