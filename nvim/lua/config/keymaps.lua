@@ -25,35 +25,9 @@ map("n", "<leader>lk", "<cmd>FzfLua keymaps<cr>", { desc = "Keymaps" })
 map("n", "<leader>lr", "<cmd>FzfLua oldfiles<cr>", { desc = "Recent files" })
 map("n", "<leader>ls", "<cmd>FzfLua grep_cword<cr>", { desc = "Search word under cursor" })
 map("n", "<leader>lb", "<cmd>FzfLua buffers<cr>", { desc = "Buffers" })
+map("n", "<leader>lm", "<cmd>FzfLua marks<cr>", { desc = "Marks" })
 
---- Harpoon Commands are <leader>h*
-local harpoon = require("harpoon")
-
-harpoon:setup()
-
-map("n", "<leader>ha", function()
-  harpoon:list():add()
-end, { desc = "Harpoon Add" })
-map("n", "<leader>he", function()
-  harpoon.ui:toggle_quick_menu(harpoon:list())
-end, { desc = "Harpoon Toggle Menu" })
-map("n", "<leader>hh", function()
-  harpoon:list():prev()
-end, { desc = "Harpoon: prev" })
-map("n", "<leader>hl", function()
-  harpoon:list():next()
-end, { desc = "Harpoon: next" })
-local function harpoon_desc(idx)
-  return function()
-    local item = harpoon:list():get(idx)
-    return item and ("Harpoon: " .. vim.fn.fnamemodify(item.value, ":t")) or ("Harpoon slot " .. idx)
-  end
-end
-
-local function harpoon_del(idx)
-  harpoon:list():remove_at(idx)
-end
-
+--- Marks Commands are <leader>M*
 local wk = require("which-key")
 
 wk.add({
@@ -61,29 +35,70 @@ wk.add({
   { "<leader>e", group = "LSP", icon = "⚙" },
   { "<leader>f", group = "Format" },
   { "<leader>g", group = "Git" },
-  { "<leader>h", group = "Harpoon", icon = "⚓" },
-  { "<leader>hd", group = "Delete slot" },
   { "<leader>l", group = "Finder" },
+  { "<leader>M", group = "Marks" },
+  { "<leader>Ma", group = "Set mark" },
+  { "<leader>Md", group = "Delete mark" },
 })
 
-local harpoon_entries = {}
-for i = 1, 9 do
-  table.insert(harpoon_entries, {
-    "<leader>h" .. i,
+local mark_entries = {}
+for i = 0, 25 do
+  local letter = string.char(65 + i)
+
+  table.insert(mark_entries, {
+    "<leader>Ma" .. letter,
     function()
-      harpoon:list():select(i)
+      local existing = nil
+      for _, m in ipairs(vim.fn.getmarklist()) do
+        if m.mark == "'" .. letter then
+          existing = vim.fn.fnamemodify(m.file, ":.")
+          break
+        end
+      end
+      if existing then
+        local choice = vim.fn.confirm("Mark " .. letter .. " is set to " .. existing .. ". Overwrite?", "&Yes\n&No")
+        if choice ~= 1 then
+          return
+        end
+      end
+      vim.cmd("mark " .. letter)
     end,
-    desc = harpoon_desc(i),
+    desc = function()
+      for _, m in ipairs(vim.fn.getmarklist()) do
+        if m.mark == "'" .. letter then
+          return "Set mark " .. letter .. " (" .. vim.fn.fnamemodify(m.file, ":t") .. ")"
+        end
+      end
+      return "Set mark " .. letter
+    end,
   })
-  table.insert(harpoon_entries, {
-    "<leader>hd" .. i,
+
+  table.insert(mark_entries, {
+    "<leader>M" .. letter,
     function()
-      harpoon_del(i)
+      vim.cmd("normal! '" .. letter)
     end,
-    desc = "Delete slot " .. i,
+    desc = function()
+      for _, m in ipairs(vim.fn.getmarklist()) do
+        if m.mark == "'" .. letter then
+          return "Mark " .. letter .. ": " .. vim.fn.fnamemodify(m.file, ":t")
+        end
+      end
+      return "Mark " .. letter .. " (unset)"
+    end,
+  })
+
+  table.insert(mark_entries, {
+    "<leader>Md" .. letter,
+    function()
+      vim.cmd("delmarks " .. letter)
+      vim.notify("Mark " .. letter .. " deleted")
+    end,
+    desc = "Delete mark " .. letter,
   })
 end
-wk.add(harpoon_entries)
+
+wk.add(mark_entries)
 
 --- Git Commands are <leader>g*
 map("n", "<leader>gg", function()

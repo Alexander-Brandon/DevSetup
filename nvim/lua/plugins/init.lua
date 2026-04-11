@@ -29,12 +29,6 @@ return {
     },
   },
   {
-    "ThePrimeagen/harpoon",
-    lazy = false,
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
-  {
     "mason-org/mason-lspconfig.nvim",
     opts = {},
     dependencies = {
@@ -75,15 +69,14 @@ return {
     lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      local function harpoon_component()
-        local ok, harpoon = pcall(require, "harpoon")
-        if not ok then
-          return ""
-        end
-        local current = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":.")
-        for i, item in ipairs(harpoon:list().items) do
-          if item.value == current then
-            return "🐡 " .. i
+      local function marks_component()
+        local current = vim.fn.expand("%:p")
+        for _, m in ipairs(vim.fn.getmarklist()) do
+          local letter = m.mark:sub(2, 2)
+          if letter:match("[A-Z]") then
+            if vim.fn.fnamemodify(m.file, ":p") == current then
+              return "🐡 " .. letter
+            end
           end
         end
         return "🙈"
@@ -125,7 +118,7 @@ return {
         sections = {
           lualine_a = { "mode" },
           lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { { "filename", path = 1 }, harpoon_component },
+          lualine_c = { { "filename", path = 1 }, marks_component },
           lualine_x = { "encoding", "fileformat", "filetype" },
           lualine_y = { "progress" },
           lualine_z = { "location" },
