@@ -36,7 +36,7 @@ echo "Done: $TMUX_DEST -> $TMUX_SRC"
 
 # Ghostty config
 GHOSTTY_SRC="$SCRIPT_DIR/ghostty/config"
-GHOSTTY_DEST="$HOME/.config/ghostty/config.ghostty"
+GHOSTTY_DEST="$HOME/.config/ghostty/config"
 GHOSTTY_DIRECTIVE="config-file = $GHOSTTY_SRC"
 
 mkdir -p "$HOME/.config/ghostty"
