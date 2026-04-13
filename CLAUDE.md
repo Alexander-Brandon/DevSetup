@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This repo manages two hand-written config sets — Neovim and tmux — installed via `install.sh` which symlinks each config into `~/.config/`.
+This repo manages hand-written config sets — Neovim, tmux, and Ghostty — installed via `install.sh`.
 
 ## Installation
 
@@ -12,7 +12,7 @@ This repo manages two hand-written config sets — Neovim and tmux — installed
 ./install.sh
 ```
 
-Symlinks `nvim/` → `~/.config/nvim` and `tmux/tmux.conf` → `~/.config/tmux/tmux.conf`.
+Symlinks `nvim/` → `~/.config/nvim` and `tmux/tmux.conf` → `~/.config/tmux/tmux.conf`. Appends a `config-file` directive to `~/.config/ghostty/config.ghostty` pointing to `ghostty/config`.
 
 ## Neovim
 
@@ -63,3 +63,10 @@ Config: `tmux/tmux.conf`
 - `prefix + r` — Reload config
 - `prefix + x` — Kill pane (no confirmation)
 - `prefix + !` — Kill all sessions except current
+
+## Ghostty
+
+Config: `ghostty/config`
+
+- `install.sh` adds `config-file = <path>` to `~/.config/ghostty/config.ghostty` (idempotent)
+- Settings here are merged into whatever exists in `config.ghostty`

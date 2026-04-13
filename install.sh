@@ -33,3 +33,20 @@ fi
 ln -s "$TMUX_SRC" "$TMUX_DEST"
 
 echo "Done: $TMUX_DEST -> $TMUX_SRC"
+
+# Ghostty config
+GHOSTTY_SRC="$SCRIPT_DIR/ghostty/config"
+GHOSTTY_DEST="$HOME/.config/ghostty/config.ghostty"
+GHOSTTY_DIRECTIVE="config-file = $GHOSTTY_SRC"
+
+mkdir -p "$HOME/.config/ghostty"
+
+if [ ! -f "$GHOSTTY_DEST" ]; then
+  echo "$GHOSTTY_DIRECTIVE" > "$GHOSTTY_DEST"
+  echo "Done: created $GHOSTTY_DEST with config-file directive"
+elif grep -qF "$GHOSTTY_SRC" "$GHOSTTY_DEST"; then
+  echo "Done: ghostty config-file directive already present"
+else
+  echo "$GHOSTTY_DIRECTIVE" >> "$GHOSTTY_DEST"
+  echo "Done: appended config-file directive to $GHOSTTY_DEST"
+fi
