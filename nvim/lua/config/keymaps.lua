@@ -12,11 +12,14 @@ map("n", "<leader>ek", function()
   vim.diagnostic.jump({ count = -1 })
 end, { desc = "Previous diagnostic" })
 
---- Window Navigation are <C-*>
+--- Window Navigation & Line Moves are <C-*>
 map("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Move to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Move to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
+
+map("n", "<C-PageDown>", "<cmd>m +1<cr>", { desc = "Move Line Down" })
+map("n", "<C-PageUp>", "<cmd>m -2<cr>", { desc = "Move Line Up" })
 
 --- Fuzzy Find Commands are <leader>l*
 map("n", "<leader>lf", "<cmd>FzfLua files<cr>", { desc = "Find files" })
