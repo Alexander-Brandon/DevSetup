@@ -17,7 +17,7 @@ if tmux has-session -t $WORKSPACE 2>/dev/null; then
 fi
 
 # GUARD for no project
-[ -d "$HOME/$PROJECT_DIR" ] || { echo "$PROJECT_DIR not found. Based on Home Directory so path should be like /Documents/projects"; exit 1; }
+[ -d "$HOME$PROJECT_DIR" ] || { echo "$PROJECT_DIR not found. Based on Home Directory so path should be like /Documents/projects"; exit 1; }
 
 # Neovim Section
 tmux new-session -d -s $WORKSPACE -x $(tput cols) -y $(tput lines)
