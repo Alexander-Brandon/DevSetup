@@ -2,6 +2,7 @@
 
 WORKSPACE=${1:-Workspace}
 PROJECT_DIR=${2:-/Documents/projects}
+AI_TERM=${3:-claude}
 
 # GUARD for tmux check
 command -v tmux &>/dev/null || { echo "INSTALL TMUX BEFORE RUNNING THE SCRIPT"; exit 1; }
@@ -25,7 +26,7 @@ tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && nvim" Enter
 
 # AI Section
 tmux split-window -h -t $WORKSPACE -p 25
-tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && claude" Enter
+tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && $AI_TERM" Enter
 
 # Console Session
 tmux new-session -d -s ${WORKSPACE}_Terminal -x $(tput cols) -y $(tput lines)
