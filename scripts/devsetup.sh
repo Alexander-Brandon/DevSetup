@@ -3,12 +3,16 @@
 WORKSPACE=${1:-Workspace}
 PROJECT_DIR=${2:-/Documents/projects}
 AI_TERM=${3:-claude}
+TEXT_EDITOR=${4:-nvim}
 
 # GUARD for tmux check
 command -v tmux &>/dev/null || { echo "INSTALL TMUX BEFORE RUNNING THE SCRIPT"; exit 1; }
 
-# GUARD for nvim check
-command -v nvim &>/dev/null || { echo "INSTALL NVIM BEFORE RUNNING THE SCRIPT"; exit 1; }
+# GUARD for $TEXT_EDITOR check
+command -v $TEXT_EDITOR &>/dev/null || { echo "INSTALL $TEXT_EDITOR BEFORE RUNNING THE SCRIPT"; exit 1; }
+
+# GUARD for $AI_TERM check
+command -v $AI_TERM &>/dev/null || { echo "INSTALL $AI_TERM BEFORE RUNNING THE SCRIPT"; exit 1; }
 
 # GUARD for already setup 
 if tmux has-session -t $WORKSPACE 2>/dev/null; then
@@ -22,7 +26,7 @@ fi
 
 # Neovim Section
 tmux new-session -d -s $WORKSPACE -x $(tput cols) -y $(tput lines)
-tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && nvim" Enter
+tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && $TEXT_EDITOR" Enter
 
 # AI Section
 tmux split-window -h -t $WORKSPACE -p 25
