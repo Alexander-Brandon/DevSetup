@@ -26,6 +26,9 @@ return {
       winopts = {
         title_flags = false,
       },
+      files = {
+        rg_opts = "--color=never --files --hidden --follow --glob '!.git' --glob '!.zig-cache' --glob '!node_modules' --glob '!build' --glob '!.DS_Store'",
+      },
     },
   },
   {
