@@ -17,19 +17,19 @@ if tmux has-session -t $WORKSPACE 2>/dev/null; then
 fi
 
 # GUARD for no project
-[ -d "$PROJECT_DIR" ] || { echo "$PROJECT_DIR not found"; exit 1; }
+[ -d "$HOME/$PROJECT_DIR" ] || { echo "$PROJECT_DIR not found. Based on Home Directory so path should be like /Documents/projects"; exit 1; }
 
 # Neovim Section
 tmux new-session -d -s $WORKSPACE -x $(tput cols) -y $(tput lines)
-tmux send-keys -t $WORKSPACE cd "$PROJECT_DIR && nvim" Enter
+tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && nvim" Enter
 
 # AI Section
 tmux split-window -h -t $WORKSPACE -p 25
-tmux send-keys -t $WORKSPACE "claude" Enter
+tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && claude" Enter
 
 # Console Session
 tmux new-session -d -s ${WORKSPACE}_Terminal -x $(tput cols) -y $(tput lines)
-tmux send-keys -t ${WORKSPACE}_Terminal cd "$PROJECT_DIR" 
+tmux send-keys -t ${WORKSPACE}_Terminal "cd $HOME$PROJECT_DIR" 
 
 # Secondary Console Section
 tmux split-window -h -t ${WORKSPACE}_Terminal -p 25
