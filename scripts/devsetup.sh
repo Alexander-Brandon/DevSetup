@@ -21,7 +21,7 @@ fi
 
 # Neovim Section
 tmux new-session -d -s $WORKSPACE -x $(tput cols) -y $(tput lines)
-tmux send-keys -t $WORKSPACE cd "$PROJECT_DIR && nvim"
+tmux send-keys -t $WORKSPACE cd "$PROJECT_DIR && nvim" Enter
 
 # AI Section
 tmux split-window -h -t $WORKSPACE -p 25
