@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WORKSPACE=${1:-Workspace}
-PROJECT_DIR=${2:-~/Documents/projects}
+PROJECT_DIR=${2:-/Documents/projects}
 
 # GUARD for tmux check
 command -v tmux &>/dev/null || { echo "INSTALL TMUX BEFORE RUNNING THE SCRIPT"; exit 1; }
