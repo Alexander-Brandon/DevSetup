@@ -29,10 +29,7 @@ tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && claude" Enter
 
 # Console Session
 tmux new-session -d -s ${WORKSPACE}_Terminal -x $(tput cols) -y $(tput lines)
-tmux send-keys -t ${WORKSPACE}_Terminal "cd $HOME$PROJECT_DIR" 
-
-# Secondary Console Section
-tmux split-window -h -t ${WORKSPACE}_Terminal -p 25
+tmux send-keys -t ${WORKSPACE}_Terminal "cd $HOME$PROJECT_DIR" Enter 
 
 tmux attach -t $WORKSPACE
 
