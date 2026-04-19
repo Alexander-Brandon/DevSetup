@@ -6,6 +6,9 @@ PROJECT_DIR=${2:-~/Documents/projects}
 # GUARD for tmux check
 command -v tmux &>/dev/null || { echo "INSTALL TMUX BEFORE RUNNING THE SCRIPT"; exit 1; }
 
+# GUARD for nvim check
+command -v nvim &>/dev/null || { echo "INSTALL NVIM BEFORE RUNNING THE SCRIPT"; exit 1; }
+
 # GUARD for already setup 
 if tmux has-session -t $WORKSPACE 2>/dev/null; then
   echo "$WORKSPACE already exists"
