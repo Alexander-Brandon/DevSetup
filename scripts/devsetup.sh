@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Params
 WORKSPACE=${1:-Workspace}
 PROJECT_DIR=${2:-/Documents/projects}
 AI_TERM=${3:-claude}
@@ -22,19 +23,19 @@ if tmux has-session -t $WORKSPACE 2>/dev/null; then
 fi
 
 # GUARD for no project
-[ -d "$HOME$PROJECT_DIR" ] || { echo "$PROJECT_DIR not found. Based on Home Directory so path should be like /Documents/projects"; exit 1; }
+[ -d "$PROJECT_DIR" ] || { echo "$PROJECT_DIR not found. Path from call should be \$HOME/Documents/projects"; exit 1; }
 
 # Neovim Section
 tmux new-session -d -s $WORKSPACE -x $(tput cols) -y $(tput lines)
-tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && $TEXT_EDITOR" Enter
+tmux send-keys -t $WORKSPACE "cd $PROJECT_DIR && $TEXT_EDITOR" Enter
 
 # AI Section
 tmux split-window -h -t $WORKSPACE -p 25
-tmux send-keys -t $WORKSPACE "cd $HOME$PROJECT_DIR && $AI_TERM" Enter
+tmux send-keys -t $WORKSPACE "cd $PROJECT_DIR && $AI_TERM" Enter
 
 # Console Session
 tmux new-session -d -s ${WORKSPACE}_Terminal -x $(tput cols) -y $(tput lines)
-tmux send-keys -t ${WORKSPACE}_Terminal "cd $HOME$PROJECT_DIR" Enter 
+tmux send-keys -t ${WORKSPACE}_Terminal "cd $PROJECT_DIR" Enter 
 
 tmux attach -t $WORKSPACE
 
