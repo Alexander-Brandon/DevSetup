@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This repo manages hand-written config sets — Neovim, tmux, and Ghostty — installed via `install.sh`.
+This repo manages hand-written config sets — Neovim, tmux, and WezTerm — installed via `install.sh`.
 
 ## Installation
 

@@ -2,9 +2,10 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-NVIM_SRC="$SCRIPT_DIR/nvim"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+NVIM_SRC="$REPO_ROOT/nvim"
 NVIM_DEST="$HOME/.config/nvim"
-TMUX_SRC="$SCRIPT_DIR/tmux/tmux.conf"
+TMUX_SRC="$REPO_ROOT/tmux/tmux.conf"
 TMUX_DEST="$HOME/.config/tmux/tmux.conf"
 
 # Ensure ~/.config exists
@@ -34,19 +35,27 @@ ln -s "$TMUX_SRC" "$TMUX_DEST"
 
 echo "Done: $TMUX_DEST -> $TMUX_SRC"
 
-# Ghostty config
-GHOSTTY_SRC="$SCRIPT_DIR/ghostty/config"
-GHOSTTY_DEST="$HOME/.config/ghostty/config"
-GHOSTTY_DIRECTIVE="config-file = $GHOSTTY_SRC"
-
-mkdir -p "$HOME/.config/ghostty"
-
-if [ ! -f "$GHOSTTY_DEST" ]; then
-  echo "$GHOSTTY_DIRECTIVE" > "$GHOSTTY_DEST"
-  echo "Done: created $GHOSTTY_DEST with config-file directive"
-elif grep -qF "$GHOSTTY_SRC" "$GHOSTTY_DEST"; then
-  echo "Done: ghostty config-file directive already present"
-else
-  echo "$GHOSTTY_DIRECTIVE" >> "$GHOSTTY_DEST"
-  echo "Done: appended config-file directive to $GHOSTTY_DEST"
+# Also symlink ~/.tmux.conf so tmux finds config regardless of XDG support
+TMUX_HOME_DEST="$HOME/.tmux.conf"
+if [ -L "$TMUX_HOME_DEST" ]; then
+  rm "$TMUX_HOME_DEST"
+elif [ -f "$TMUX_HOME_DEST" ]; then
+  rm "$TMUX_HOME_DEST"
 fi
+
+ln -s "$TMUX_SRC" "$TMUX_HOME_DEST"
+
+echo "Done: $TMUX_HOME_DEST -> $TMUX_SRC"
+
+# WezTerm config
+WEZTERM_SRC="$REPO_ROOT/wezterm/wezterm.lua"
+WEZTERM_DEST="$HOME/.wezterm.lua"
+
+if [ -L "$WEZTERM_DEST" ]; then
+  rm "$WEZTERM_DEST"
+elif [ -f "$WEZTERM_DEST" ]; then
+  rm "$WEZTERM_DEST"
+fi
+
+ln -s "$WEZTERM_SRC" "$WEZTERM_DEST"
+echo "Done: $WEZTERM_DEST -> $WEZTERM_SRC"
