@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This repo manages hand-written config sets — Neovim, tmux, and WezTerm — installed via `install.sh`.
+This repo manages hand-written config sets — Neovim, tmux, WezTerm, and Helix — installed via `install.sh`.
 
 ## Installation
 
@@ -12,7 +12,7 @@ This repo manages hand-written config sets — Neovim, tmux, and WezTerm — ins
 ./install.sh
 ```
 
-Symlinks `nvim/` → `~/.config/nvim` and `tmux/tmux.conf` → `~/.config/tmux/tmux.conf`. Appends a `config-file` directive to `~/.config/ghostty/config.ghostty` pointing to `ghostty/config`.
+Symlinks `nvim/` → `~/.config/nvim`, `tmux/tmux.conf` → `~/.config/tmux/tmux.conf`, and `helix/` → `~/.config/helix`. Appends a `config-file` directive to `~/.config/ghostty/config.ghostty` pointing to `ghostty/config`.
 
 ## Neovim
 
@@ -63,6 +63,12 @@ Config: `tmux/tmux.conf`
 - `prefix + r` — Reload config
 - `prefix + x` — Kill pane (no confirmation)
 - `prefix + !` — Kill all sessions except current
+
+## Helix
+
+Config: `helix/config.toml`
+
+- `install.sh` symlinks `helix/` → `~/.config/helix`
 
 ## Ghostty
 

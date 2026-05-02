@@ -59,3 +59,16 @@ fi
 
 ln -s "$WEZTERM_SRC" "$WEZTERM_DEST"
 echo "Done: $WEZTERM_DEST -> $WEZTERM_SRC"
+
+# Helix config
+HELIX_SRC="$REPO_ROOT/helix"
+HELIX_DEST="$HOME/.config/helix"
+
+if [ -L "$HELIX_DEST" ]; then
+  rm "$HELIX_DEST"
+elif [ -d "$HELIX_DEST" ]; then
+  rm -rf "$HELIX_DEST"
+fi
+
+ln -s "$HELIX_SRC" "$HELIX_DEST"
+echo "Done: $HELIX_DEST -> $HELIX_SRC"
